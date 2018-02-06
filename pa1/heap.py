@@ -43,6 +43,8 @@ def heapify(A, i, n=None):
     children, then nothing more needs to be done, it's already a min heap.
     Otherwise you should swap the root with the smallest child and recursively
     heapify that tree.
+
+    It doesn't say, so this makes it a min heap.
     """
     if n is None:
         n = len(A)
@@ -50,21 +52,64 @@ def heapify(A, i, n=None):
         # if asked to heapify an element not below n (the conceptual size of
         # the heap), just return because no work is required
         return
-    pass #TODO
+    v = A[i] # parent value
+    ri = right(i) # right index
+    rv = A[ri] # right value
+    li = left(i) # left index
+    lv = A[li] # left value
+    if li >= n and ri >= n:
+        # element has no children, so no work is required
+        return
+    elif li < n and ri < n:
+        # element has both children
+        if rv < lv: # right child smaller
+            si = ri
+            sv = rv
+        else: # left child smaller
+            si = li
+            sv = lv
+    elif li < n:
+        # element has left child
+        si = li
+        sv = lv
+    else:
+        # element has right child
+        si = ri
+        sv = rv
+
+    # si contains potential swap child index
+    # sv contains potential swap child value
+    if sv < v:
+        # do swap
+        A[i] = sv
+        A[si] = v
+        heapfiy(A, si, n)
 
 def buildHeap(A):
     """
     Turn the list A (whose elements could be in any order) into a
     heap. Use heapify.
     """
-    pass #TODO
+    n = len(A)
+    # first parent with children is parent of last element
+    i = parent(n-1)
+    while i >= 0:
+        heapify(A, i, n)
+        i -= 1
 
+def fillHole(A, i):
+    pass#TODO
 def heapExtractMin(A):
     """
     Extract the min element from the heap A. Make sure that A is a valid heap
     afterwards. Return the extracted element.
     """
-    pass #TODO
+    ret = A[0]
+    ri = right(0)
+    rv = A[ri]
+    li = left(0)
+    lv = A[li]
+    #TODO
 
 def heapInsert(A, v):
     """
@@ -76,7 +121,7 @@ def heapInsert(A, v):
 def heapSort(A):
     """
     Sort the list A (in place) using the heap sort algorithm, into descending
-    order.  Start by using buildHeap.
+    order. Start by using buildHeap.
     For example, if A = [4, 2, 1, 3, 5]. After calling heapSort(A), then A
     should be [5, 4, 3, 2, 1].
     """

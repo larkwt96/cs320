@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 heap.py input.txt | diff - output.txt
