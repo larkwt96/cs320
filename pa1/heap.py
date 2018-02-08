@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 import math
 
@@ -54,36 +56,30 @@ def heapify(A, i, n=None):
         return
     v = A[i] # parent value
     ri = right(i) # right index
-    rv = A[ri] # right value
     li = left(i) # left index
-    lv = A[li] # left value
-    if li >= n and ri >= n:
-        # element has no children, so no work is required
+    # note: li >= n => ri >= n since ri > li
+    if li >= n: # no children exist, no work
         return
-    elif li < n and ri < n:
-        # element has both children
-        if rv < lv: # right child smaller
-            si = ri
-            sv = rv
-        else: # left child smaller
-            si = li
-            sv = lv
-    elif li < n:
-        # element has left child
+    elif ri >= n: # left child exists
         si = li
-        sv = lv
-    else:
-        # element has right child
-        si = ri
-        sv = rv
+        sv = A[li]
+    else: # both children exist
+        # comparison
+        if A[ri] < A[li]: # right child smaller
+            si = ri
+            sv = A[ri]
+        else: # left child bigger (or equal)
+            si = li
+            sv = A[li]
 
     # si contains potential swap child index
     # sv contains potential swap child value
-    if sv < v:
+    # comparison
+    if sv < v: # one child bigger
         # do swap
         A[i] = sv
         A[si] = v
-        heapfiy(A, si, n)
+        heapify(A, si, n)
 
 def buildHeap(A):
     """
@@ -96,27 +92,53 @@ def buildHeap(A):
     while i >= 0:
         heapify(A, i, n)
         i -= 1
-
+"""
 def fillHole(A, i):
-    pass#TODO
+    if db:
+        print('called fillHole')
+        printHeap(A)
+    n = len(A)
+    li = left(i)
+    ri = right(i)
+    if li >= n: # no children
+        return
+    elif ri >= n: # only left child
+        A[i] = A[li]
+    else:
+        # comparison
+        if A[li] < A[ri]: # left child bigger
+            A[i] = A[li]
+            fillHole(A, li)
+        else:
+            A[i] = A[ri]
+            fillHole(A, ri)
+    if db:
+        print('post fillHole')
+        print(A)
+"""
 def heapExtractMin(A):
     """
     Extract the min element from the heap A. Make sure that A is a valid heap
     afterwards. Return the extracted element.
     """
+    if len(A) == 1:
+        return A.pop()
     ret = A[0]
-    ri = right(0)
-    rv = A[ri]
-    li = left(0)
-    lv = A[li]
-    #TODO
+    A[0] = A.pop()
+    heapify(A, 0)
+    return ret
 
 def heapInsert(A, v):
     """
     Insert the element v into the heap A. Make sure that A is a valid heap
     afterwards.
     """
-    pass #TODO
+    i = parent(len(A))
+    A.append(v)
+    while i > 0:
+        heapify(A, i)
+        i = parent(i)
+    heapify(A, i)
 
 def heapSort(A):
     """
@@ -125,7 +147,23 @@ def heapSort(A):
     For example, if A = [4, 2, 1, 3, 5]. After calling heapSort(A), then A
     should be [5, 4, 3, 2, 1].
     """
-    pass #TODO
+    if db:
+        print('before heap')
+        print(A)
+    buildHeap(A)
+    n = len(A)
+    while n - 1 > 0:
+        if db:
+            print('sorting with n = ' + str(n))
+            print(A)
+        tmp = A[0]
+        A[0] = A[n-1]
+        A[n-1] = tmp
+        n -= 1
+        heapify(A, 0, n)
+        if db:
+            print('post: ')
+            print(A)
 
 # provided
 def printHeap(A):
