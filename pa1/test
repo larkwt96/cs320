@@ -1,3 +1,4 @@
 #!/bin/bash
 
 python3 heap.py input.txt | diff - output.txt
+python3 heap_tests.py | grep False
