@@ -1,0 +1,25 @@
+the Gayle-Shaply algorithm
+Creates stable matching
+O(n^2)
+
+Init no one matched
+while some man is free
+    choose a free man
+    w = highest women on his list whom he hasn't proposed
+    if w free
+        match
+    else if w perfers m to her current match, m'
+        m,w get matched, m' is freed
+    else m remains free
+
+Need to prove correctness: Prove no unstable pairs
+
+-~*~- -~*~- -~*~- -~*~- -~*~- -~*~- -~*~- -~*~- 
+
+Scheduling
+Given start times and end times, max number of tasks completed
+Solution: Greedy algorithm, choose next ending time of available tasks.
+
+-~*~- -~*~- -~*~- -~*~- -~*~- -~*~- -~*~- -~*~- 
+
+Bipartite Matching, bipartite graph - map between two sets
