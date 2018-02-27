@@ -70,7 +70,7 @@ def dfs(r):
     for kid in gr[node][1]:
         color = gr[kid][0]
         if color == 'grey': # cycle
-            print("cycle in", node)
+            print("cycle in", kid)
             numkids -= 1
         elif color == 'black': # not cycle
             numkids -= 1
