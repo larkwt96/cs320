@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 dfbf.py in1.txt a debug
