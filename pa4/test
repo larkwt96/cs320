@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in *; do
+    python3 huffman.py $i
+    diff $i ${i}_encoded_decoded
+done
+rm *_encoded*
