@@ -271,7 +271,6 @@ def huffman_codes_from_frequencies(frequencies):
 
     huffmanCodes = {}
     decode_huffman_graph(freqMinHeap[0], huffmanCodes)
-    print(freqMinHeap[0])
     return huffmanCodes
     
 
